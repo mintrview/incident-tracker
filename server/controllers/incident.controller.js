@@ -15,8 +15,7 @@ async function createIncident(req, res) {
   if (
     typeof req.body?.vin !== "string" ||
     typeof req.body?.notes !== "string" ||
-    !moment(req.body?.date).isValid() ||
-    !moment(req.body.date).isSameOrBefore(moment.now())
+    !moment(req.body?.date).isValid()
   ) {
     return res.status(400).json({ error: "Invalid request" });
   }
@@ -27,10 +26,14 @@ async function createIncident(req, res) {
   try {
     let vehicle = vehicles.getVehicle(req.body.vin);
     if (!vehicle) {
-      // Decode the VIN and add it to the in-memory data-store.
-      vehicle = await vpic.decodeVINValues(vin);
-      if (vehicle.errorCode !== "0") {
-        return res.status(400).json({ error: "Invalid or incomplete VIN" });
+      if (process.env.MOCKS === "1") {
+        vehicle = { make: 'MAKE', model: 'MODEL', year: '1990' };
+      } else {
+        // Decode the VIN and add it to the in-memory data-store.
+        vehicle = await vpic.decodeVINValues(vin);
+        if (vehicle.errorCode !== "0") {
+          return res.status(400).json({ error: "Invalid or incomplete VIN" });
+        }
       }
       vehicles.addVehicle(vehicle);
     }

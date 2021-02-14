@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import IncidentFilters from "./IncidentFilters";
 
-const IncidentTableContainer = styled.form`
+const IncidentTableContainer = styled.div`
   flex: 1;
 `;
 
@@ -34,9 +34,9 @@ const HighlightedText = ({ text, highlight }) => {
   return strings.map((s, i) => {
     // Every other string in the split will be a highlighted segment.
     if ((i + 1) % 2 == 0) {
-      return <mark>{s}</mark>;
+      return <mark key={i}>{s}</mark>;
     }
-    return <span>{s}</span>;
+    return <span key={i}>{s}</span>;
   });
 };
 
@@ -59,7 +59,7 @@ export default function IncidentTable({ incidents, filters, onFiltersChanged }) 
         </thead>
         <tbody>
           {incidents.map(({ vin, date, notes, make, model, year }) => (
-            <tr key={vin}>
+            <tr key={vin + date}>
               <td>
                 <HighlightedText text={vin} highlight={filters.textSearch} />
               </td>

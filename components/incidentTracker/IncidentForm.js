@@ -20,7 +20,7 @@ const IncidentFormNotification = styled.div`
 export default function IncidentForm({ onIncidentAdded }) {
   const [vin, setVin] = useState("");
   const [notes, setNotes] = useState("");
-  const [date, setDatetime] = useState(moment.now());
+  const [date, setDatetime] = useState(moment());
   const [isLoading, setIsLoading] = useState(false);
   const [notification, setNotification] = useState(null);
 
@@ -61,10 +61,10 @@ export default function IncidentForm({ onIncidentAdded }) {
       <input id="vin" value={vin} onChange={(e) => setVin(e.target.value)} type="text" required></input>
       <label htmlFor="incident_form_date">Date</label>
       <Datetime
-        inputProps={{ id: "incident_form_date" }}
+        inputProps={{ id: "incident_form_date", readOnly: true }}
         value={date}
         onChange={setDatetime}
-        isValidDate={(selectedDate) => selectedDate.isSameOrBefore(moment.now())}
+        isValidDate={(selectedDate) => selectedDate.isSameOrBefore(moment())}
       />
       <label htmlFor="notes">Notes</label>
       <textarea value={notes} id="notes" onChange={(e) => setNotes(e.target.value)} required></textarea>

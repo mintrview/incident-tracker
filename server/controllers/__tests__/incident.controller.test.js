@@ -18,7 +18,7 @@ describe("Incident controller", () => {
 
   const incident = {
     vin: "VIN_NUMBER",
-    date: moment.now(),
+    date: moment(),
     notes: "NOTES",
   };
 
@@ -126,7 +126,7 @@ describe("Incident controller", () => {
         body: {
           vin: null,
           notes: "notes",
-          date: moment.now(),
+          date: moment(),
         },
         testName: "Invalid VIN",
       },
@@ -134,18 +134,10 @@ describe("Incident controller", () => {
         body: {
           vin: "VIN_NUMBER",
           notes: null,
-          date: moment.now(),
+          date: moment(),
         },
         testName: "Invalid notes",
-      },
-      {
-        body: {
-          vin: "VIN_NUMBER",
-          notes: "notes",
-          date: moment().add(10, "days"),
-        },
-        testName: "Invalid date",
-      },
+      }
     ].forEach(({ body, testName }) => {
       test(testName, (done) => {
         postIncident({ body }, createRequest(done));

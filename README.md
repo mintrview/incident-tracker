@@ -17,6 +17,8 @@ A simple UI and node.js server to keep track of vehicle incidents by VIN.
 
 4. To run the application in production, run `npm run build`, then `npm run start` with the `NODE_ENV` environment variable set to `production`.
 
+**NOTE: It was observed that the vpic API was experiencing some latency issues. To enable mocks, set the `MOCKS` environment variable to `1`.**
+
 # Testing
 
 Unit tests can be run with:
